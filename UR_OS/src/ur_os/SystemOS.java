@@ -93,13 +93,13 @@ public class SystemOS implements Runnable {
 
     public void initSimulationsumrolled() {
         Process p;
-        p = new Process(0, 0, 5, 4, 3);
+        p = new Process(0, 0, 10, 1, 2);
         processes.add(p);
-        p = new Process(0, 2, 3, 5, 6);
+        p = new Process(0, 3, 4, 1, 4);
         processes.add(p);
-        p = new Process(0, 6, 7, 3, 5);
+        p = new Process(0, 2, 2, 0, 0);
         processes.add(p);
-        p = new Process(0, 8, 4, 3, 7);
+        p = new Process(0, 4, 1, 0, 0);
         processes.add(p);
 
     }
@@ -132,7 +132,7 @@ public class SystemOS implements Runnable {
             // System.out.println(cpu);
             // System.out.println(ioq);
 
-            if (i == 3) {
+            if (i == 2) {
                 System.out.print("");
             }
 

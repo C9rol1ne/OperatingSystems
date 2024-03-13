@@ -15,7 +15,7 @@ public class RoundRobin extends Scheduler {
 
     RoundRobin(OS os) {
         super(os);
-        quantum = 3; // defult q
+        quantum = 2; // default q
         executedCyclesInBurst = 0;
     }
 
@@ -46,12 +46,12 @@ public class RoundRobin extends Scheduler {
             os.interrupt(InterruptType.SCHEDULER_RQ_TO_CPU, first);
             executedCyclesInBurst = 1;
         } else {
-            // cpu busy
+            // cpu busy and processes
             if (executedCyclesInBurst < quantum) {
                 executedCyclesInBurst++;
             } else {
                 os.interrupt(InterruptType.SCHEDULER_CPU_TO_RQ, processes.remove(0));
-                executedCyclesInBurst = 0;
+                executedCyclesInBurst = 1;
             }
         }
     }

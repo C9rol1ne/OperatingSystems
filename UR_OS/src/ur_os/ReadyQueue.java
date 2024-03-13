@@ -25,7 +25,7 @@ public class ReadyQueue {
 
         // s = new FCFS(os);
 
-        s = new RoundRobin(os, 3);
+        s = new RoundRobin(os, 5);
     }
 
     public ReadyQueue(OS OS, Scheduler s) {
