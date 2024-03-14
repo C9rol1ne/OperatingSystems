@@ -15,10 +15,19 @@ public abstract class Scheduler {
 
     OS os;
     protected LinkedList<Process> processes;
+    Scheduler MFQParent; // This is the parent for scheduling queues 
 
     public Scheduler(OS os) {
         this.os = os;
         processes = new LinkedList();
+    }
+
+    public Scheduler getMFQParent() {
+        return MFQParent;
+    }
+
+    public void setMFQParent(Scheduler mFQParent) {
+        MFQParent = mFQParent;
     }
 
     public void getNext() {
@@ -48,6 +57,14 @@ public abstract class Scheduler {
 
     public void update() {
         getNext(os.isCPUEmpty());
+    }
+
+    public Process getNextProcess(){
+        return null;
+    }
+
+    public boolean isMFQQueueDowngraded(){ // If process have to go to a lower priority queue in MFQ
+        return false;
     }
 
     public Process removeProcess(Process p) {

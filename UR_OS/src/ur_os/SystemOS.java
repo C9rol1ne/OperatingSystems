@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -44,7 +44,7 @@ public class SystemOS implements Runnable {
         // initSimulationQueueSimple();
         initSimulationQueueSimpler();
         // initSimulationQueueSimpler2();
-
+        // initSimulationsumrolled();
         showProcesses();
     }
 
@@ -187,6 +187,198 @@ public class SystemOS implements Runnable {
         clock = 0;
     }
 
+    public void initSimulationQueueSimpler(){
+        
+        Process p = new Process(false);
+        ProcessBurst temp = new ProcessBurst(5,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(4,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(3,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(0);
+        processes.add(p);
+        
+        
+        p = new Process(false);
+        temp = new ProcessBurst(3,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(5,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(6,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(2);
+        processes.add(p);
+        
+        p = new Process(false);
+        temp = new ProcessBurst(7,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(3,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(5,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(6);
+        processes.add(p);
+        
+        p = new Process(false);
+        temp = new ProcessBurst(4,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(3,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(7,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(8);
+        processes.add(p);
+        
+        clock = 0;
+    }
+    
+    public void initSimulationQueueSimpler2(){
+
+        Process p = new Process(false);
+        ProcessBurst temp = new ProcessBurst(15,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(12,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(21,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(0);
+        p.setPid(0);
+        processes.add(p);
+
+
+        p = new Process(false);
+        temp = new ProcessBurst(8,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(4,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(16,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(2);
+        p.setPid(1);
+        processes.add(p);
+
+        p = new Process(false);
+        temp = new ProcessBurst(10,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(5,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(12,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(6);
+        p.setPid(2);
+        processes.add(p);
+
+        p = new Process(false);
+        temp = new ProcessBurst(9,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(6,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(17,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(8);
+        p.setPid(3);
+        processes.add(p);
+
+        clock = 0;
+    }
+
+    public void initSimulationQueueSimpler(){
+        
+        Process p = new Process(false);
+        ProcessBurst temp = new ProcessBurst(5,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(4,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(3,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(0);
+        processes.add(p);
+        
+        
+        p = new Process(false);
+        temp = new ProcessBurst(3,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(5,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(6,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(2);
+        processes.add(p);
+        
+        p = new Process(false);
+        temp = new ProcessBurst(7,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(3,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(5,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(6);
+        processes.add(p);
+        
+        p = new Process(false);
+        temp = new ProcessBurst(4,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(3,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(7,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(8);
+        processes.add(p);
+        
+        clock = 0;
+    }
+    
+    public void initSimulationQueueSimpler2(){
+
+        Process p = new Process(false);
+        ProcessBurst temp = new ProcessBurst(15,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(12,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(21,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(0);
+        p.setPid(0);
+        processes.add(p);
+
+
+        p = new Process(false);
+        temp = new ProcessBurst(8,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(4,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(16,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(2);
+        p.setPid(1);
+        processes.add(p);
+
+        p = new Process(false);
+        temp = new ProcessBurst(10,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(5,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(12,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(6);
+        p.setPid(2);
+        processes.add(p);
+
+        p = new Process(false);
+        temp = new ProcessBurst(9,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(6,ProcessBurstType.IO);    
+        p.addBurst(temp);
+        temp = new ProcessBurst(17,ProcessBurstType.CPU);    
+        p.addBurst(temp);
+        p.setTime_init(8);
+        p.setPid(3);
+        processes.add(p);
+
+        clock = 0;
+    }
+
     public boolean isSimulationFinished() {
 
         boolean finished = true;
@@ -223,6 +415,8 @@ public class SystemOS implements Runnable {
             ps = getProcessAtI(i);
             for (Process p : ps) {
                 os.create_process(p);
+                // System.out.print("------------------\n");
+                // System.out.print(p.getPid());
             } // If the scheduler is preemtive, this action will trigger the extraction from
               // the CPU, is any process is there.
 
@@ -230,8 +424,7 @@ public class SystemOS implements Runnable {
             os.update();
             clock++;
             // os.update() prepares the system for execution. It runs at the beginning of
-            // the cycle.
-
+            // the cycle.            
             temp_exec = cpu.getProcess();
             if (temp_exec == null) {
                 tempID = -1;

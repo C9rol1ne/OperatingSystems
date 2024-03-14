@@ -25,11 +25,13 @@ public class ReadyQueue {
 
         // s = new FCFS(os);
 
-        s = new RoundRobin(os, 4);
+        // s = new RoundRobin(os, 3);
+
+        s = new MFQ(os,new RoundRobin(os,3),new RoundRobin(os,6),new FCFS(os));
     }
 
     public ReadyQueue(OS OS, Scheduler s) {
-        this.os = os;
+        this.os = OS;
         this.s = s;
     }
 

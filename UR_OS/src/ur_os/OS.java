@@ -7,6 +7,7 @@ package ur_os;
 
 import java.util.HashSet;
 import java.util.Set;
+import static ur_os.InterruptType.SCHEDULER_CPU_TO_RQ;
 
 /**
  *
@@ -35,6 +36,11 @@ public class OS {
         return cpu.isEmpty();
     }
 
+    public Process getProcessInCPU(){
+        return cpu.getProcess();
+    }
+
+
     public void interrupt(InterruptType t, Process p) {
 
         switch (t) {
@@ -57,7 +63,7 @@ public class OS {
 
             case SCHEDULER_CPU_TO_RQ:
                 // When the scheduler is preemptive and will send the current process in CPU to
-                // the Ready Queue
+                // the Ready Queue                
                 Process temp = cpu.extractProcess();
                 rq.addProcess(temp);
                 if (p != null) {
@@ -76,11 +82,15 @@ public class OS {
 
     }
 
+    public void removeProcessFromCPU(){
+        cpu.removeProcess();
+    }
+
     public void create_process() {
         rq.addProcess(new Process(process_count++, system.getTime()));
     }
 
-    public void create_process(Process p) {
+    public void create_process(Process p) {        
         p.setPid(process_count++);
         rq.addProcess(p);
     }
