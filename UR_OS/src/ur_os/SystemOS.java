@@ -19,7 +19,7 @@ import java.util.Set;
 public class SystemOS implements Runnable {
 
     private static int clock = 0;
-    private static final int MAX_SIM_CYCLES = 300;
+    private static final int MAX_SIM_CYCLES = 50;
     private static final int MAX_SIM_PROC_CREATION_TIME = 50;
     private static final double PROB_PROC_CREATION = 0.1;
     private static Random r = new Random(1235);
@@ -93,194 +93,17 @@ public class SystemOS implements Runnable {
         clock = 0;
     }
 
-    public void initSimulationQueueSimpler() {
-
-        Process p = new Process(false);
-        ProcessBurst temp = new ProcessBurst(5, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        temp = new ProcessBurst(4, ProcessBurstType.IO);
-        p.addBurst(temp);
-        temp = new ProcessBurst(3, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        p.setTime_init(0);
+    public void initSimulationsumrolled() {
+        Process p;
+        p = new Process(0, 0, 5, 4, 3);
+        processes.add(p);
+        p = new Process(0, 2, 3, 5, 6);
+        processes.add(p);
+        p = new Process(0, 6, 7, 3, 5);
+        processes.add(p);
+        p = new Process(0, 8, 4, 3, 7);
         processes.add(p);
 
-        p = new Process(false);
-        temp = new ProcessBurst(3, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        temp = new ProcessBurst(5, ProcessBurstType.IO);
-        p.addBurst(temp);
-        temp = new ProcessBurst(6, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        p.setTime_init(2);
-        processes.add(p);
-
-        p = new Process(false);
-        temp = new ProcessBurst(7, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        temp = new ProcessBurst(3, ProcessBurstType.IO);
-        p.addBurst(temp);
-        temp = new ProcessBurst(5, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        p.setTime_init(6);
-        processes.add(p);
-
-        p = new Process(false);
-        temp = new ProcessBurst(4, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        temp = new ProcessBurst(3, ProcessBurstType.IO);
-        p.addBurst(temp);
-        temp = new ProcessBurst(7, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        p.setTime_init(8);
-        processes.add(p);
-
-        clock = 0;
-    }
-
-    public void initSimulationQueueSimpler2() {
-
-        Process p = new Process(false);
-        ProcessBurst temp = new ProcessBurst(15, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        temp = new ProcessBurst(12, ProcessBurstType.IO);
-        p.addBurst(temp);
-        temp = new ProcessBurst(21, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        p.setTime_init(0);
-        p.setPid(0);
-        processes.add(p);
-
-        p = new Process(false);
-        temp = new ProcessBurst(8, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        temp = new ProcessBurst(4, ProcessBurstType.IO);
-        p.addBurst(temp);
-        temp = new ProcessBurst(16, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        p.setTime_init(2);
-        p.setPid(1);
-        processes.add(p);
-
-        p = new Process(false);
-        temp = new ProcessBurst(10, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        temp = new ProcessBurst(5, ProcessBurstType.IO);
-        p.addBurst(temp);
-        temp = new ProcessBurst(12, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        p.setTime_init(6);
-        p.setPid(2);
-        processes.add(p);
-
-        p = new Process(false);
-        temp = new ProcessBurst(9, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        temp = new ProcessBurst(6, ProcessBurstType.IO);
-        p.addBurst(temp);
-        temp = new ProcessBurst(17, ProcessBurstType.CPU);
-        p.addBurst(temp);
-        p.setTime_init(8);
-        p.setPid(3);
-        processes.add(p);
-
-        clock = 0;
-    }
-
-    public void initSimulationQueueSimpler(){
-        
-        Process p = new Process(false);
-        ProcessBurst temp = new ProcessBurst(5,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(4,ProcessBurstType.IO);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(3,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        p.setTime_init(0);
-        processes.add(p);
-        
-        
-        p = new Process(false);
-        temp = new ProcessBurst(3,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(5,ProcessBurstType.IO);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(6,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        p.setTime_init(2);
-        processes.add(p);
-        
-        p = new Process(false);
-        temp = new ProcessBurst(7,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(3,ProcessBurstType.IO);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(5,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        p.setTime_init(6);
-        processes.add(p);
-        
-        p = new Process(false);
-        temp = new ProcessBurst(4,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(3,ProcessBurstType.IO);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(7,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        p.setTime_init(8);
-        processes.add(p);
-        
-        clock = 0;
-    }
-    
-    public void initSimulationQueueSimpler2(){
-
-        Process p = new Process(false);
-        ProcessBurst temp = new ProcessBurst(15,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(12,ProcessBurstType.IO);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(21,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        p.setTime_init(0);
-        p.setPid(0);
-        processes.add(p);
-
-
-        p = new Process(false);
-        temp = new ProcessBurst(8,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(4,ProcessBurstType.IO);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(16,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        p.setTime_init(2);
-        p.setPid(1);
-        processes.add(p);
-
-        p = new Process(false);
-        temp = new ProcessBurst(10,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(5,ProcessBurstType.IO);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(12,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        p.setTime_init(6);
-        p.setPid(2);
-        processes.add(p);
-
-        p = new Process(false);
-        temp = new ProcessBurst(9,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(6,ProcessBurstType.IO);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(17,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        p.setTime_init(8);
-        p.setPid(3);
-        processes.add(p);
-
-        clock = 0;
     }
 
     public void initSimulationQueueSimpler(){
@@ -407,7 +230,7 @@ public class SystemOS implements Runnable {
             // System.out.println(cpu);
             // System.out.println(ioq);
 
-            if (i == 50) {
+            if (i == 3) {
                 System.out.print("");
             }
 
