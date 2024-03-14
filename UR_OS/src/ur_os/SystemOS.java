@@ -19,7 +19,7 @@ import java.util.Set;
 public class SystemOS implements Runnable {
 
     private static int clock = 0;
-    private static final int MAX_SIM_CYCLES = 50;
+    private static final int MAX_SIM_CYCLES = 300;
     private static final int MAX_SIM_PROC_CREATION_TIME = 50;
     private static final double PROB_PROC_CREATION = 0.1;
     private static Random r = new Random(1235);
@@ -215,7 +215,7 @@ public class SystemOS implements Runnable {
             // System.out.println(cpu);
             // System.out.println(ioq);
 
-            if (i == 2) {
+            if (i == 50) {
                 System.out.print("");
             }
 
