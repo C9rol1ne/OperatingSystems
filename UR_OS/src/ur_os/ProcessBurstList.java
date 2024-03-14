@@ -45,8 +45,6 @@ public class ProcessBurstList {
         if (currentBurst < bursts.size()) {
             if (bursts.get(currentBurst).advanceBurst()) { // True means that the current burst is finished
                 currentBurst++;
-                System.out
-                        .println("After advancing: CurrentBurst: " + currentBurst + ", Bursts Size: " + bursts.size());
                 if (currentBurst == bursts.size())
                     finished = true;
                 return true; // True means that the current burst is finished

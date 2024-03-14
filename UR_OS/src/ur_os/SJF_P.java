@@ -61,6 +61,7 @@ public class SJF_P extends Scheduler {
                 Process shortestProcessInRq = findShortestRemainingProcess();
 
                 if (currentRemainingTimeOfCpuProcess > shortestProcessInRq.getRemainingTimeInCurrentBurst()) {
+                    processes.remove(shortestProcessInRq);
                     os.interrupt(InterruptType.SCHEDULER_CPU_TO_RQ, shortestProcessInRq);
                 }
             }

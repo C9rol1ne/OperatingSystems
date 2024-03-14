@@ -15,7 +15,7 @@ public class RoundRobin extends Scheduler {
 
     RoundRobin(OS os) {
         super(os);
-        quantum = 2; // default q
+        quantum = 4; // default q
         executedCyclesInBurst = 0;
     }
 
@@ -28,13 +28,13 @@ public class RoundRobin extends Scheduler {
 
     public void getNext(boolean cpuEmpty) {
         if (processes.isEmpty()) {
-            if (cpuEmpty) { 
+            if (cpuEmpty) {
                 return;
             }
 
             executedCyclesInBurst++;
             if (executedCyclesInBurst >= quantum) {
-                executedCyclesInBurst = 1;
+                executedCyclesInBurst = 0;
             }
 
             return;
