@@ -31,7 +31,7 @@ public class RoundRobin extends Scheduler {
             if (cpuEmpty) {
                 return;
             }
-
+            // Processes in not empty and neither is the CPU
             executedCyclesInBurst++;
             if (executedCyclesInBurst >= quantum) {
                 executedCyclesInBurst = 0;
@@ -40,7 +40,7 @@ public class RoundRobin extends Scheduler {
             return;
         }
 
-        if (cpuEmpty) {
+        if (cpuEmpty) { // cpu empty and RQ has processes
             Process first = processes.remove(0);
             os.interrupt(InterruptType.SCHEDULER_RQ_TO_CPU, first);
             executedCyclesInBurst = 1;
