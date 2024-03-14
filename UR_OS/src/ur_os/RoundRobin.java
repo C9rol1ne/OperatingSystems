@@ -28,13 +28,12 @@ public class RoundRobin extends Scheduler {
 
     public void getNext(boolean cpuEmpty) {
         if (processes.isEmpty()) {
-            if (cpuEmpty) { // CPU is not empty but there are no processes in the ready queue
+            if (cpuEmpty) { 
                 return;
             }
 
             executedCyclesInBurst++;
             if (executedCyclesInBurst >= quantum) {
-                // os.interrupt(InterruptType.SCHEDULER_CPU_TO_RQ, os.cpu.getProcess());
                 executedCyclesInBurst = 1;
             }
 
@@ -46,7 +45,7 @@ public class RoundRobin extends Scheduler {
             os.interrupt(InterruptType.SCHEDULER_RQ_TO_CPU, first);
             executedCyclesInBurst = 1;
         } else {
-            // cpu busy and processes
+            // cpu busy and RQ has processes
             if (executedCyclesInBurst < quantum) {
                 executedCyclesInBurst++;
             } else {
