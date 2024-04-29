@@ -13,24 +13,25 @@ import ur_os.process.ProcessMemoryManagerType;
  *
  * @author super
  */
-public class PMM_Segmentation extends ProcessMemoryManager{
-    
+public class PMM_Segmentation extends ProcessMemoryManager {
+
     SegmentTable st;
+    
 
     public PMM_Segmentation(int processSize) {
-        super(ProcessMemoryManagerType.SEGMENTATION,processSize);
+        super(ProcessMemoryManagerType.SEGMENTATION, processSize);
         st = new SegmentTable(processSize);
     }
 
     public PMM_Segmentation(SegmentTable st) {
         this.st = st;
     }
-    
+
     public PMM_Segmentation(PMM_Segmentation pmm) {
         super(pmm);
-        if(pmm.getType() == this.getType()){
+        if (pmm.getType() == this.getType()) {
             this.st = new SegmentTable(pmm.getSt());
-        }else{
+        } else {
             System.out.println("Error - Wrong PMM parameter");
         }
     }
@@ -38,35 +39,89 @@ public class PMM_Segmentation extends ProcessMemoryManager{
     public SegmentTable getSt() {
         return st;
     }
-    
-    public void addSegment(int base, int limit){
+
+    public void addSegment(int base, int limit) {
         st.addSegment(base, limit);
     }
-    
-    public SegmentTableEntry getSegment(int i){
+
+    public SegmentTableEntry getSegment(int i) {
         return st.getSegment(i);
     }
-    
-    public MemoryAddress getSegmentMemoryAddressFromLocalAddress(int locAdd){
-        
+
+    public MemoryAddress getSegmentMemoryAddressFromLocalAddress(int locAdd) {
+
         return st.getSegmentMemoryAddressFromLocalAddress(locAdd);
     }
-    
-    public MemoryAddress getPhysicalMemoryAddressFromLogicalMemoryAddress(MemoryAddress m){
-        
+
+    public int getSegmentNumber(int logAdd) { // helper function
+        ArrayList<Integer> CLAS = getCumulativeLogicalAddressSpace(st);
+
+        for (int i = 0; i < st.getSize(); i++) {
+            if (logAdd < CLAS.get(i)) {
+                return i;
+            }
+        }
+        return -1; //handle exception
+    }
+
+    public int getOffset(int segmentNumber, int logAdd) { // helper function
+        ArrayList<Integer> CLAS = getCumulativeLogicalAddressSpace(st);
+
+        int logicalBase;
+        int offset;
+
+        if (segmentNumber == 0) {
+            logicalBase = 0;
+        } else {
+            logicalBase = CLAS.get(segmentNumber - 1);
+        }
+        offset = logAdd - logicalBase;
+
+        return offset;
+
+    }
+
+    public ArrayList getCumulativeLogicalAddressSpace(SegmentTable S) {
+
+        ArrayList<Integer> CLAS = new ArrayList();
+
+        int limit = st.getSegment(0).getLimit();
+        CLAS.add(limit); // initialize CLAS
+
+        for (int i = 1; i < st.getSize(); i++) {
+            SegmentTableEntry segment = st.getSegment(i);
+            int length = segment.getLimit();
+            int clas = CLAS.get(i - 1);
+            CLAS.add(length + clas);
+        }
+        return CLAS;
+    }
+
+    public MemoryAddress getPhysicalMemoryAddressFromLogicalMemoryAddress(MemoryAddress m) {
+
         return st.getPhysicalMemoryAddressFromLogicalMemoryAddress(m);
     }
 
-    
-   @Override
-    public int getPhysicalAddress(int logicalAddress){
-        
-        return -1;
+    @Override
+    public int getPhysicalAddress(int logicalAddress) {
+        ArrayList<Integer> CLAS = getCumulativeLogicalAddressSpace(st);
+
+        int segmentNumber = getSegmentNumber(logicalAddress);
+        int offset = getOffset(segmentNumber, logicalAddress);
+        int physicalAdd = 0;
+
+        SegmentTableEntry segment = st.getSegment(segmentNumber);
+        if(offset < segment.getLimit()){
+            physicalAdd = offset + segment.getBase();
+        }else{
+            throw new IllegalArgumentException("offset is greater than limit");
+        }
+        return physicalAdd;
     }
-    
-     @Override
-    public String toString(){
+
+    @Override
+    public String toString() {
         return st.toString();
     }
-    
+
 }
