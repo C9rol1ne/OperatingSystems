@@ -16,11 +16,12 @@ import ur_os.process.ProcessMemoryManagerType;
 public class PMM_Segmentation extends ProcessMemoryManager {
 
     SegmentTable st;
-    
+    private ArrayList<Integer> cumulativeLogAddSpace;
 
     public PMM_Segmentation(int processSize) {
         super(ProcessMemoryManagerType.SEGMENTATION, processSize);
         st = new SegmentTable(processSize);
+        cumulativeLogAddSpace = getCumulativeLogicalAddressSpace(st); // Calculate CLAS
     }
 
     public PMM_Segmentation(SegmentTable st) {
@@ -54,18 +55,16 @@ public class PMM_Segmentation extends ProcessMemoryManager {
     }
 
     public int getSegmentNumber(int logAdd) { // helper function
-        ArrayList<Integer> CLAS = getCumulativeLogicalAddressSpace(st);
 
         for (int i = 0; i < st.getSize(); i++) {
-            if (logAdd < CLAS.get(i)) {
+            if (logAdd < cumulativeLogAddSpace.get(i)) {
                 return i;
             }
         }
-        return -1; //handle exception
+        return -1; // handle exception
     }
 
     public int getOffset(int segmentNumber, int logAdd) { // helper function
-        ArrayList<Integer> CLAS = getCumulativeLogicalAddressSpace(st);
 
         int logicalBase;
         int offset;
@@ -73,7 +72,7 @@ public class PMM_Segmentation extends ProcessMemoryManager {
         if (segmentNumber == 0) {
             logicalBase = 0;
         } else {
-            logicalBase = CLAS.get(segmentNumber - 1);
+            logicalBase = cumulativeLogAddSpace.get(segmentNumber - 1);
         }
         offset = logAdd - logicalBase;
 
@@ -104,16 +103,15 @@ public class PMM_Segmentation extends ProcessMemoryManager {
 
     @Override
     public int getPhysicalAddress(int logicalAddress) {
-        ArrayList<Integer> CLAS = getCumulativeLogicalAddressSpace(st);
 
         int segmentNumber = getSegmentNumber(logicalAddress);
         int offset = getOffset(segmentNumber, logicalAddress);
         int physicalAdd = 0;
 
         SegmentTableEntry segment = st.getSegment(segmentNumber);
-        if(offset < segment.getLimit()){
+        if (offset < segment.getLimit()) {
             physicalAdd = offset + segment.getBase();
-        }else{
+        } else {
             throw new IllegalArgumentException("offset is greater than limit");
         }
         return physicalAdd;
