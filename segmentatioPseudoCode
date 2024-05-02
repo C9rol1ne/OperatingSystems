@@ -9,7 +9,7 @@ function getPhysicalAddress(logicalAddress)
   if offset < segment.getLimit() then
     physicalAddress := offset + segment.getBase()
   else
-    throw new IllegalArgumentException("offset is greater than limit")
+    handle exception
   end if
 
   return physicalAddress
