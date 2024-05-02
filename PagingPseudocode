@@ -1,0 +1,8 @@
+function getPhysicalAddress(logicalAddress, pageSize)
+  pageAddress := getPageMemoryAddressFromLocalAddress(logicalAddress, pageSize)
+  offset := pageAddress.getOffset()
+  frame := pageAddress.getDivision()
+  physicalAddress := (frame * pageSize) + offset
+
+  return physicalAddress
+end function
