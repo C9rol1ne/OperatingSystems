@@ -1,0 +1,16 @@
+
+function getPhysicalAddress(logicalAddress)
+  segmentNumber := getSegmentNumber(logicalAddress)
+  offset := getOffset(segmentNumber, logicalAddress)
+  physicalAddress := 0
+
+  segment := st.getSegment(segmentNumber)
+
+  if offset < segment.getLimit() then
+    physicalAddress := offset + segment.getBase()
+  else
+    throw new IllegalArgumentException("offset is greater than limit")
+  end if
+
+  return physicalAddress
+end function
