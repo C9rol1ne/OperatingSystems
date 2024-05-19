@@ -25,7 +25,7 @@ public class FirstFitMemorySlotManager extends FreeMemorySlotManager {
                 MemorySlot allocatedSlot = new MemorySlot(slot.getBase(), size);
 
                 if (slot.getSize() == size) { // perfect fit case
-                    freeMemorySlots.remove(slot);
+                    freeMemorySlots.remove(slot); // so there's no slot in freeMemorySlots with size 0
                 } else {
                     // Adjust the original slot
                     slot.setBase(slot.getBase() + size);
