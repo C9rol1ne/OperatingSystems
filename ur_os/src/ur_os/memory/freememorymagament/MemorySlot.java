@@ -8,7 +8,7 @@ package ur_os.memory.freememorymagament;
  *
  * @author super
  */
-public class MemorySlot{
+public class MemorySlot implements Comparable<MemorySlot>{
     
     int base;
     int size;
@@ -90,4 +90,8 @@ public class MemorySlot{
         return false;
     }
     
+    @Override
+    public int compareTo(MemorySlot slot) {
+        return Integer.compare(getSize(), slot.getSize());
+    }
 }

@@ -29,7 +29,7 @@ public abstract class FreeMemorySlotManager extends FreeMemoryManager {
 
     public abstract MemorySlot getSlot(int size);
 
-    protected LinkedList<MemorySlot> getList() { // Added getter method for list
+    protected LinkedList<MemorySlot> getFreeMemorySlotsList() { // Added getter method for list
 
         return list;
     }

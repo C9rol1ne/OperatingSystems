@@ -17,7 +17,7 @@ public class FirstFitMemorySlotManager extends FreeMemorySlotManager {
 
     @Override
     public MemorySlot getSlot(int size) {
-        LinkedList<MemorySlot> freeMemorySlots = this.getList();
+        LinkedList<MemorySlot> freeMemorySlots = this.getFreeMemorySlotsList();
 
         for (MemorySlot slot : freeMemorySlots) {
             if (slot.getSize() >= size) { // found hole big enough

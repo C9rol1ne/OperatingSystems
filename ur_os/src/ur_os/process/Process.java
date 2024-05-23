@@ -8,7 +8,6 @@ package ur_os.process;
 import ur_os.memory.MemoryOperation;
 import ur_os.memory.MemoryOperationList;
 import ur_os.memory.contiguous.PMM_Contiguous;
-import static ur_os.process.ProcessMemoryManagerType.PAGING;
 
 /**
  *
@@ -24,6 +23,7 @@ public class Process implements Comparable{
     ProcessBurstList pbl;
     ProcessState state;
     int currentScheduler;
+    int size;
 
     ProcessMemoryManager pmm;
     MemoryOperationList mol;
@@ -52,7 +52,7 @@ public class Process implements Comparable{
         this.pid = pid;
         this.time_init = time_init;
         time_finished = -1;
-        
+        size = 0;
         if(pmm == null)
             this.pmm = new PMM_Contiguous();
         else
@@ -99,6 +99,7 @@ public class Process implements Comparable{
     
     public void setPMM(ProcessMemoryManager pmm){
         this.pmm = pmm;
+        size = pmm.getSize();
         mol.generateSimpleMemoryOperations(pmm.getSize()); //Generate 10 random Memory Operations
     }
 
@@ -162,8 +163,12 @@ public class Process implements Comparable{
         this.state = state;
     }
 
+    public void setSize(int size){
+        this.size = size;
+    }
+    
     public int getSize() {
-        return pmm.getSize();
+        return size;
     }
  
     public int getRemainingTimeInCurrentBurst(){

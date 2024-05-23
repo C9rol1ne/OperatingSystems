@@ -4,6 +4,9 @@
  */
 package ur_os.memory.freememorymagament;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 /**
  *
  * @author super
@@ -12,16 +15,29 @@ public class WorstFitMemorySlotManager extends FreeMemorySlotManager{
     
     @Override
     public MemorySlot getSlot(int size) {
-        MemorySlot m = null;
-        //To do
-        
-        
-        //m is the slot that the method will return to be assigned to the process.
-        //The original selected slot needs to be updated with the amount of memory that was taken from it to be assigned to the process.
-        //Example: if the selected slot had 190 bytes and the process requested 120 bytes, then m will be a slot of size 120 with a certain base,
-        //and the original slot will have the 70 remaining bytes, with either the base or the size modified.
-        //Note: Think of what will happen if the process request fits perfectly on a memory slot.
-        return m;
-    }
-    
+        MemorySlot m = null, largestSlot;
+        LinkedList<MemorySlot> freeMemorySlots = this.getFreeMemorySlotsList();
+
+        if (freeMemorySlots.size() == 0){
+            throw new IllegalArgumentException("Not enough memory to satisfy request");
+        } else {
+            Collections.sort(freeMemorySlots);
+            largestSlot = freeMemorySlots.get(freeMemorySlots.size()-1);
+            if (largestSlot.getSize() >= size){
+                // Create a new MemorySlot with the requested size
+                m = new MemorySlot(largestSlot.getBase(), size);
+                if (largestSlot.getSize() == size) { // perfect fit case
+                    freeMemorySlots.remove(largestSlot); // so there's no slot in freeMemorySlots with size 0
+                } else {
+                    // Adjust the original slot
+                    largestSlot.setBase(largestSlot.getBase() + size);
+                    largestSlot.setSize(largestSlot.getSize() - size);
+                }
+                return m;
+
+            } else {
+                throw new IllegalArgumentException("Not enough memory to satisfy request");
+            }
+        }        
+    }    
 }
