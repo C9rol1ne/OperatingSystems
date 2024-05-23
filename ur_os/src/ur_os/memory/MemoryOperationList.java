@@ -32,7 +32,6 @@ public class MemoryOperationList {
             }else{
                 b=0;
             }
-            
             mol.add(new MemoryOperation(mtype, r.nextInt(processSize),b));
         }
     }

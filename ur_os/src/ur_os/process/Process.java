@@ -65,7 +65,7 @@ public class Process implements Comparable{
             pbl.generateRandomBursts(NUM_CPU_CYCLES, MAX_CPU_CYCLES, MAX_IO_CYCLES);
             //pbl.generateSimpleBursts(); //Generates process with 3 bursts (CPU, IO, CPU) with 5 cycles each
         }
-        
+
         if(autoMem){
             mol.generateSimpleMemoryOperations(pmm.getSize()); //Generate 10 random Memory Operations
         }
@@ -201,13 +201,13 @@ public class Process implements Comparable{
         sb.append("PID: ");
         sb.append(pid);
         sb.append(" Size: ");
-        sb.append(pmm.getSize());
+        sb.append(this.getSize());
         sb.append(" t_init: ");
         sb.append(time_init);
-        sb.append("\nPMM:\n");
-        sb.append(pmm.toString());
-        sb.append("\nPBL:\n");
-        sb.append(pbl.toString());
+        // sb.append("\nPMM:\n");
+        // sb.append(pmm.toString());
+        // sb.append("\nPBL:\n");
+        // sb.append(pbl.toString());
         
         return sb.toString();
     }

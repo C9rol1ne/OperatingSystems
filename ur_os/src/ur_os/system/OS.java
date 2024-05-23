@@ -96,6 +96,8 @@ public class OS {
                     }else{
                         msm.reclaimMemory(p);
                     }
+                    System.out.println("Process PID " + p.getPid() + " finished");
+                    system.showFreeMemory();
                 }else{
                     ioq.addProcess(p);
                 }
@@ -151,18 +153,21 @@ public class OS {
         ProcessMemoryManager pmm;
         switch (PMM) {
             case PAGING:
-                pmm = new PMM_Paging(r.nextInt(MAX_PROC_SIZE));
+                // pmm = new PMM_Paging(r.nextInt(MAX_PROC_SIZE));
+                pmm = new PMM_Paging(p.getSize());
                 p.setPMM(pmm);
                 assignFramesToProcess(p);
                 break;
             case SEGMENTATION:
-                pmm = new PMM_Segmentation(r.nextInt(MAX_PROC_SIZE));
+                // pmm = new PMM_Segmentation(r.nextInt(MAX_PROC_SIZE));
+                pmm = new PMM_Segmentation(p.getSize());
                 p.setPMM(pmm);
                 assignSegmentsToProcess(p);
                 break;
             default:
             case CONTIGUOUS:
-                pmm = new PMM_Contiguous(r.nextInt(MAX_PROC_SIZE));
+                // pmm = new PMM_Contiguous(r.nextInt(MAX_PROC_SIZE));
+                pmm = new PMM_Contiguous(p.getSize());
                 p.setPMM(pmm);
                 //get free slot and assign it to the process
                 PMM_Contiguous pmmc = (PMM_Contiguous)p.getPMM();
@@ -173,7 +178,15 @@ public class OS {
     }
     
     public MemorySlot getMemorySlot(int size){
-        return msm.getSlot(size);
+        MemorySlot resultSlot = null;
+        long startTime = System.nanoTime();
+        resultSlot = msm.getSlot(size);
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime; 
+        double durationInMilliseconds = (double) duration / 1_000_000;
+        System.out.println("Slot asignation execution time: " + durationInMilliseconds + " milliseconds");
+        system.showFreeMemory();
+        return resultSlot;
     }
     
     public void assignSegmentsToProcess(Process p){
@@ -213,13 +226,13 @@ public class OS {
     
     public byte load(int physicalAddress){
         byte b = memory.get(physicalAddress);
-        System.out.println("The obtained data is: "+b);
+        // System.out.println("The obtained data is: "+b);
         return b;
     }
     
     public void store(int physicalAddress, byte content){
         memory.set(physicalAddress, content);
-        System.out.println("The data "+memory.get(physicalAddress)+" is stored in: "+physicalAddress);
+        // System.out.println("The data "+memory.get(physicalAddress)+" is stored in: "+physicalAddress);
     }
     
     public SimulationType getSimulationType() {

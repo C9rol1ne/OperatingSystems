@@ -18,20 +18,24 @@ public class BestFitMemorySlotManager extends FreeMemorySlotManager{
     public MemorySlot getSlot(int size) {
         MemorySlot m = null;
         LinkedList<MemorySlot> freeMemorySlots = this.getFreeMemorySlotsList();
-        Collections.sort(freeMemorySlots);
-        for (MemorySlot slot : freeMemorySlots) {
-            if (slot.getSize() >= size){
-                // Create a new MemorySlot with the requested size
-                m = new MemorySlot(slot.getBase(), size);
+        if (freeMemorySlots.size() == 0){
+            throw new IllegalArgumentException("Not enough memory to satisfy request");
+        } else {
+            Collections.sort(freeMemorySlots);
+            for (MemorySlot slot : freeMemorySlots) {
+                if (slot.getSize() >= size){
+                    // Create a new MemorySlot with the requested size
+                    m = new MemorySlot(slot.getBase(), size);
+                    if (slot.getSize() == size) { // perfect fit case
+                        freeMemorySlots.remove(slot); // so there's no slot in freeMemorySlots with size 0
+                    } else {
+                        // Adjust the original slot
+                        slot.setBase(slot.getBase() + size);
+                        slot.setSize(slot.getSize() - size);
+                    }
+                    return m;
+                }
             }
-            if (slot.getSize() == size) { // perfect fit case
-                freeMemorySlots.remove(slot); // so there's no slot in freeMemorySlots with size 0
-            } else {
-                // Adjust the original slot
-                slot.setBase(slot.getBase() + size);
-                slot.setSize(slot.getSize() - size);
-            }
-            return m;
         }
         //m is the slot that the method will return to be assigned to the process.
         //The original selected slot needs to be updated with the amount of memory that was taken from it to be assigned to the process.

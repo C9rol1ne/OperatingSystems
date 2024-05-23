@@ -58,6 +58,9 @@ public abstract class FreeMemorySlotManager extends FreeMemoryManager {
 
         int i = 0;
         // Find the slot with a higher base address than the one inserted
+        // if (list.size() == 0){
+        //     throw new IllegalArgumentException("Not enough memory to satisfy request");
+        // }
         while (i < list.size() && list.get(i).getBase() < m.getBase()) {
             i++;
         }

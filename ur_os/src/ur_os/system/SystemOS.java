@@ -29,7 +29,7 @@ public class SystemOS implements Runnable{
     private static final int MAX_SIM_CYCLES = 1000;
     private static final int MAX_SIM_PROC_CREATION_TIME = 50;
     private static final double PROB_PROC_CREATION = 0.1;
-    public static final int MAX_PROC_SIZE = 1000;
+    public static final int MAX_PROC_SIZE = 100;
     private static Random r = new Random(1235);
     private OS os;
     private CPU cpu;
@@ -37,13 +37,14 @@ public class SystemOS implements Runnable{
     
     private Memory memory;
     public static final int PAGE_SIZE = 64; //Page size in bytes
-    public static final ProcessMemoryManagerType PMM = ProcessMemoryManagerType.SEGMENTATION;
+    public static final ProcessMemoryManagerType PMM = ProcessMemoryManagerType.CONTIGUOUS;
     public static final FreeMemorySlotManagerType MSM = FreeMemorySlotManagerType.FIRST_FIT;
     
     public static final int SEED_SEGMENTS = 7401;
     public static final int SEED_PROCESS_SIZE = 9630;
     
-    public static final int MEMORY_SIZE = 1_048_576; //1MB
+    // public static final int MEMORY_SIZE = 1_048_576; //1MB
+    public static final int MEMORY_SIZE = 100; //1MB
     
     protected ArrayList<Process> processes;
     ArrayList<Integer> execution;
@@ -160,7 +161,7 @@ public class SystemOS implements Runnable{
         
         
         Process p = new Process(0,0);
-        p.setSize(200);
+        p.setSize(20);
         ProcessBurst temp = new ProcessBurst(5,ProcessBurstType.CPU);    
         p.addBurst(temp);
         temp = new ProcessBurst(4,ProcessBurstType.IO);    
@@ -172,7 +173,7 @@ public class SystemOS implements Runnable{
         
         //Process 1
         p = new Process(1,5);
-        p.setSize(500);
+        p.setSize(10);
         temp = new ProcessBurst(13,ProcessBurstType.CPU);    
         p.addBurst(temp);
         temp = new ProcessBurst(5,ProcessBurstType.IO);    
@@ -183,8 +184,8 @@ public class SystemOS implements Runnable{
         
         
         //Process 2
-        p = new Process(2,6);
-        p.setSize(250);
+        p = new Process(2,10);
+        p.setSize(50);
         temp = new ProcessBurst(7,ProcessBurstType.CPU);    
         p.addBurst(temp);
         temp = new ProcessBurst(3,ProcessBurstType.IO);    
@@ -194,8 +195,8 @@ public class SystemOS implements Runnable{
         processes.add(p);
         
         //Process 3
-        p = new Process(3,24);
-        p.setSize(800);
+        p = new Process(3,10);
+        p.setSize(20);
         temp = new ProcessBurst(4,ProcessBurstType.CPU);    
         p.addBurst(temp);
         temp = new ProcessBurst(3,ProcessBurstType.IO);    
@@ -204,16 +205,16 @@ public class SystemOS implements Runnable{
         p.addBurst(temp);
         processes.add(p);
         
-        //Process 4
-        p = new Process(4,31);
-        p.setSize(600);
-        temp = new ProcessBurst(7,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(3,ProcessBurstType.IO);    
-        p.addBurst(temp);
-        temp = new ProcessBurst(7,ProcessBurstType.CPU);    
-        p.addBurst(temp);
-        processes.add(p);
+        // //Process 4
+        // p = new Process(4,31);
+        // p.setSize(40);
+        // temp = new ProcessBurst(7,ProcessBurstType.CPU);    
+        // p.addBurst(temp);
+        // temp = new ProcessBurst(3,ProcessBurstType.IO);    
+        // p.addBurst(temp);
+        // temp = new ProcessBurst(7,ProcessBurstType.CPU);    
+        // p.addBurst(temp);
+        // processes.add(p);
         
         clock = 0;
     }
@@ -301,17 +302,18 @@ public class SystemOS implements Runnable{
         Process temp_exec;
         int tempID;
         while(!isSimulationFinished() && i < MAX_SIM_CYCLES){//MAX_SIM_CYCLES is the maximum simulation time, to avoid infinite loops
-            System.out.println("******Clock: "+i+"******");
+            // System.out.println("******Clock: "+i+"******");
             
             
-            if(this.getSimulationType() == SimulationType.ALL || this.getSimulationType() == SimulationType.PROCESS_PLANNING){
-                System.out.println(cpu);
-                System.out.println(ioq);
-            }
+            // if(this.getSimulationType() == SimulationType.ALL || this.getSimulationType() == SimulationType.PROCESS_PLANNING){
+            //     System.out.println(cpu);
+            //     System.out.println(ioq);
+            // }
             
             //Crear procesos, si aplica en el ciclo actual
             ps = getProcessAtI(i);
             for (Process p : ps) {
+                System.out.println("******Clock: "+i+"******");
                 os.create_process(p);
                 System.out.println("Process Created: "+p.getPid()+"\n"+p);
                 
@@ -360,16 +362,16 @@ public class SystemOS implements Runnable{
         }
         System.out.println("");
         
-        System.out.println("******Performance Indicators******");
-        System.out.println("Total execution cycles: "+clock);
-        System.out.println("CPU Utilization: "+this.calcCPUUtilization());
-        System.out.println("Throughput: "+this.calcThroughput());
-        System.out.println("Average Turnaround Time: "+this.calcTurnaroundTime());
-        System.out.println("Average Waiting Time: "+this.calcAvgWaitingTime());
-        System.out.println("Average Context Switches: "+this.calcAvgContextSwitches());
+        // System.out.println("******Performance Indicators******");
+        // System.out.println("Total execution cycles: "+clock);
+        // System.out.println("CPU Utilization: "+this.calcCPUUtilization());
+        // System.out.println("Throughput: "+this.calcThroughput());
+        // System.out.println("Average Turnaround Time: "+this.calcTurnaroundTime());
+        // System.out.println("Average Waiting Time: "+this.calcAvgWaitingTime());
+        // System.out.println("Average Context Switches: "+this.calcAvgContextSwitches());
         
-        showProcesses();
-        memory.showNotNullBytes();
+        // showProcesses();
+        // memory.showNotNullBytes();
         
         showFreeMemory();
     }
@@ -384,7 +386,6 @@ public class SystemOS implements Runnable{
     }
     
     public void showProcesses(){
-        System.out.println("Gerardo");
         System.out.println("Process list:");
         StringBuilder sb = new StringBuilder();
         

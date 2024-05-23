@@ -21,15 +21,15 @@ public class ReadyQueue {
     public ReadyQueue(OS os){
         this.os = os;
         
-        //s = new SJF_P(os);
+        // s = new SJF_P(os);
         
         //s = new SJF_NP(os);
         
-        //s = new FCFS(os);
+        s = new FCFS(os);
         
         //s = new RoundRobin(os,6);
         
-        s = new MFQ(os,new RoundRobin(os,3),new RoundRobin(os,6),new FCFS(os));
+        // s = new MFQ(os,new RoundRobin(os,3),new RoundRobin(os,6),new FCFS(os));
     }
     
     public ReadyQueue(OS OS, Scheduler s){

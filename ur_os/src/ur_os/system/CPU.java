@@ -66,7 +66,7 @@ public class CPU {
     public void advanceMemoryOperation(){
         MemoryOperation mop = p.getNextMemoryOperation();
         if(mop != null){
-            System.out.println("Process "+p.getPid()+" is executing "+mop);
+            // System.out.println("Process "+p.getPid()+" is executing "+mop);
             mu.executeMemoryOperation(mop);
         }
     }
